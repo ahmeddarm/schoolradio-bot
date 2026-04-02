@@ -1,58 +1,50 @@
-# 🎙️ بوت إذاعة المدرسة - SchoolRadio Bot
+# 🎙️ بوت إذاعة المدرسة
 
 بوت تلغرام لنشر محتوى الإذاعة على GitHub تلقائياً.
 
 ## ✨ المميزات
 
-- 🔑 توليد SSH Keys ثابتة لكل مستخدم
 - 📻 نشر سريع بمجرد إرسال المحتوى
 - 🔄 استبدال `index.html` في المشروع تلقائياً
+- ✅ يعمل على Vercel (Serverless)
 
-## 🚀 طريقة التثبيت
+## 🚀 التثبيت
 
-### 1. استنساخ المشروع
-```bash
-git clone <repo-url>
-cd schoolradio-bot
+### 1. اربط على Vercel
 ```
-
-### 2. تثبيت المتطلبات
-```bash
-uv pip install -r requirements.txt
+https://vercel.com/new
 ```
+اختر هذا المشروع
 
-### 3. تشغيل البوت
-```bash
-python bot.py
+### 2. أضف Environment Variables
+في Vercel → Settings → Environment Variables:
+- `BOT_TOKEN`: توكن البوت
+- `GITHUB_TOKEN`: GitHub Personal Access Token (مع صلاحية repo)
+
+### 3. إعداد Webhook
+بعد رفع المشروع على Vercel:
+```
+https://your-app.vercel.app/setup?url=https://your-app.vercel.app
 ```
 
 ## 📖 طريقة الاستخدام
 
-### للمستخدمين:
-
-1. **أرسل `/start`** → يولّد لك مفتاح SSH
-2. **انسخ المفتاح** → أضفه في GitHub (Settings → SSH Keys)
-3. **أرسل `/update`** → ابدأ عملية النشر
-4. **أدخل اسم الإذاعة** → مثل "إذاعة اليوم الوطني"
-5. **الصق محتوى index.html** → سيتم رفعه تلقائياً
-
-### الأوامر:
 | الأمر | الوظيفة |
 |-------|---------|
-| `/start` | بدء البوت وتوليد SSH Key |
+| `/start` | بدء البوت |
 | `/update` | نشر محتوى جديد |
-| `/key` | عرض الـ SSH Key |
-| `/help` | المساعدة |
+| `/cancel` | إلغاء العملية |
+
+### خطوات النشر:
+1. أرسل `/update`
+2. أدخل اسم الإذاعة
+3. الصق محتوى `index.html`
+4. سيتم النشر تلقائياً!
 
 ## 🔧 الإعدادات
 
-### تغيير التوكن:
-عدّل المتغير في `bot.py`:
-```python
-BOT_TOKEN = "YOUR_BOT_TOKEN"
-```
-
 ### تغيير المستودع:
+عدّل `GITHUB_REPO` في `server.py`:
 ```python
 GITHUB_REPO = "username/repo-name"
 ```
@@ -60,21 +52,8 @@ GITHUB_REPO = "username/repo-name"
 ## 📁 هيكل المشروع
 
 ```
-schoolradio-bot/
-├── bot.py           # الكود الرئيسي
+├── server.py        # الكود الرئيسي (Flask)
+├── vercel.json      # إعدادات Vercel
 ├── requirements.txt # المتطلبات
-├── README.md        # التوثيق
-├── keys/            # مفاتيح SSH (تولّد تلقائياً)
-└── users.json       # بيانات المستخدمين
+└── README.md        # التوثيق
 ```
-
-## ⚠️ ملاحظات مهمة
-
-- **لا تحذف مفتاح SSH** من GitHub بعد إضافته
-- تأكد أن لديك صلاحية Push على المستودع
-- البوت يحتاج تشغيل مستمر ( VPS أو خدمة استضافة)
-
-## 🔒 الأمان
-
-- مفاتيح SSH تُحفظ محلياً
-- لا يُشارك أي بيانات مع أطراف ثالثة

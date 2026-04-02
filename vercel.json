@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.py"
+    }
+  ],
+  "env": [
+    {
+      "key": "BOT_TOKEN",
+      "value": "8733216596:AAHLzEokx8d1ozuA0Ao7G4yM-m6qEu5ESq4"
+    }
+  ]
+}
